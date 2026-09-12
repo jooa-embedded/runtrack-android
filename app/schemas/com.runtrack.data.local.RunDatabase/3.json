@@ -1,0 +1,668 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 3,
+    "identityHash": "5b831860be11dee1db7ecaaa0e2e9289",
+    "entities": [
+      {
+        "tableName": "run_session",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`sessionId` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `startedAt` INTEGER NOT NULL, `endedAt` INTEGER NOT NULL, `durationSec` INTEGER NOT NULL, `userWeightKgSnapshot` REAL NOT NULL, `distanceMeters` REAL, `title` TEXT NOT NULL, `note` TEXT NOT NULL, `createdAt` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "sessionId",
+            "columnName": "sessionId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "startedAt",
+            "columnName": "startedAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "endedAt",
+            "columnName": "endedAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "durationSec",
+            "columnName": "durationSec",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "userWeightKgSnapshot",
+            "columnName": "userWeightKgSnapshot",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "distanceMeters",
+            "columnName": "distanceMeters",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "title",
+            "columnName": "title",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "note",
+            "columnName": "note",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "sessionId"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "run_summary",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`sessionId` INTEGER NOT NULL, `cumulativeImpulseTotal` REAL NOT NULL, `asymmetryIndex` REAL NOT NULL, `mdfStartHz` REAL NOT NULL, `mdfEndHz` REAL NOT NULL, `fatigueIndexPct` REAL NOT NULL, `avgRms` REAL NOT NULL, `formBreakCount` INTEGER NOT NULL, `avgCadenceSpm` INTEGER NOT NULL, PRIMARY KEY(`sessionId`), FOREIGN KEY(`sessionId`) REFERENCES `run_session`(`sessionId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "sessionId",
+            "columnName": "sessionId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cumulativeImpulseTotal",
+            "columnName": "cumulativeImpulseTotal",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "asymmetryIndex",
+            "columnName": "asymmetryIndex",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mdfStartHz",
+            "columnName": "mdfStartHz",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mdfEndHz",
+            "columnName": "mdfEndHz",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "fatigueIndexPct",
+            "columnName": "fatigueIndexPct",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "avgRms",
+            "columnName": "avgRms",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "formBreakCount",
+            "columnName": "formBreakCount",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "avgCadenceSpm",
+            "columnName": "avgCadenceSpm",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": false,
+          "columnNames": [
+            "sessionId"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": [
+          {
+            "table": "run_session",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "sessionId"
+            ],
+            "referencedColumns": [
+              "sessionId"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "location_summary",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `sessionId` INTEGER NOT NULL, `location` TEXT NOT NULL, `ptaAvgG` REAL NOT NULL, `ptaMaxG` REAL NOT NULL, `ptaStdG` REAL NOT NULL, `avgAttenuation` REAL NOT NULL, `isHidden` INTEGER NOT NULL, FOREIGN KEY(`sessionId`) REFERENCES `run_session`(`sessionId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sessionId",
+            "columnName": "sessionId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "location",
+            "columnName": "location",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ptaAvgG",
+            "columnName": "ptaAvgG",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ptaMaxG",
+            "columnName": "ptaMaxG",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ptaStdG",
+            "columnName": "ptaStdG",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "avgAttenuation",
+            "columnName": "avgAttenuation",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isHidden",
+            "columnName": "isHidden",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_location_summary_sessionId",
+            "unique": false,
+            "columnNames": [
+              "sessionId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_location_summary_sessionId` ON `${TABLE_NAME}` (`sessionId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "run_session",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "sessionId"
+            ],
+            "referencedColumns": [
+              "sessionId"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "impact_sample",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `sessionId` INTEGER NOT NULL, `tOffsetMs` INTEGER NOT NULL, `location` TEXT NOT NULL, `ptaAvgG` REAL NOT NULL, `ptaMaxG` REAL NOT NULL, `loadingRateAvgGPerS` REAL NOT NULL, `cumulativeImpulse` REAL NOT NULL, `isHidden` INTEGER NOT NULL, FOREIGN KEY(`sessionId`) REFERENCES `run_session`(`sessionId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sessionId",
+            "columnName": "sessionId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "tOffsetMs",
+            "columnName": "tOffsetMs",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "location",
+            "columnName": "location",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ptaAvgG",
+            "columnName": "ptaAvgG",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "ptaMaxG",
+            "columnName": "ptaMaxG",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "loadingRateAvgGPerS",
+            "columnName": "loadingRateAvgGPerS",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "cumulativeImpulse",
+            "columnName": "cumulativeImpulse",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isHidden",
+            "columnName": "isHidden",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_impact_sample_sessionId",
+            "unique": false,
+            "columnNames": [
+              "sessionId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_impact_sample_sessionId` ON `${TABLE_NAME}` (`sessionId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "run_session",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "sessionId"
+            ],
+            "referencedColumns": [
+              "sessionId"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "emg_sample",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `sessionId` INTEGER NOT NULL, `tOffsetMs` INTEGER NOT NULL, `medianFreqHz` REAL NOT NULL, `meanFreqHz` REAL NOT NULL, `rms` REAL NOT NULL, `signalQuality` REAL NOT NULL, FOREIGN KEY(`sessionId`) REFERENCES `run_session`(`sessionId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sessionId",
+            "columnName": "sessionId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "tOffsetMs",
+            "columnName": "tOffsetMs",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "medianFreqHz",
+            "columnName": "medianFreqHz",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "meanFreqHz",
+            "columnName": "meanFreqHz",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "rms",
+            "columnName": "rms",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "signalQuality",
+            "columnName": "signalQuality",
+            "affinity": "REAL",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_emg_sample_sessionId",
+            "unique": false,
+            "columnNames": [
+              "sessionId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_emg_sample_sessionId` ON `${TABLE_NAME}` (`sessionId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "run_session",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "sessionId"
+            ],
+            "referencedColumns": [
+              "sessionId"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "form_break_event",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `sessionId` INTEGER NOT NULL, `tOffsetMs` INTEGER NOT NULL, `type` TEXT NOT NULL, `severity` TEXT NOT NULL, `affectedJoint` TEXT, `description` TEXT NOT NULL, `durationMs` INTEGER NOT NULL, `isHidden` INTEGER NOT NULL, FOREIGN KEY(`sessionId`) REFERENCES `run_session`(`sessionId`) ON UPDATE NO ACTION ON DELETE CASCADE )",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sessionId",
+            "columnName": "sessionId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "tOffsetMs",
+            "columnName": "tOffsetMs",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "type",
+            "columnName": "type",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "severity",
+            "columnName": "severity",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "affectedJoint",
+            "columnName": "affectedJoint",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "description",
+            "columnName": "description",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "durationMs",
+            "columnName": "durationMs",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isHidden",
+            "columnName": "isHidden",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_form_break_event_sessionId",
+            "unique": false,
+            "columnNames": [
+              "sessionId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_form_break_event_sessionId` ON `${TABLE_NAME}` (`sessionId`)"
+          }
+        ],
+        "foreignKeys": [
+          {
+            "table": "run_session",
+            "onDelete": "CASCADE",
+            "onUpdate": "NO ACTION",
+            "columns": [
+              "sessionId"
+            ],
+            "referencedColumns": [
+              "sessionId"
+            ]
+          }
+        ]
+      },
+      {
+        "tableName": "fatigue_session",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `startedAtMs` INTEGER NOT NULL, `preMdfLeftHz` REAL NOT NULL, `preMdfRightHz` REAL NOT NULL, `preRmsLeft` REAL NOT NULL, `preRmsRight` REAL NOT NULL, `preWindowCount` INTEGER NOT NULL, `postMdfLeftHz` REAL, `postMdfRightHz` REAL, `postRmsLeft` REAL, `postRmsRight` REAL, `postWindowCount` INTEGER, `postMeasuredAtMs` INTEGER, `fiLeftPercent` REAL, `fiRightPercent` REAL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "startedAtMs",
+            "columnName": "startedAtMs",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "preMdfLeftHz",
+            "columnName": "preMdfLeftHz",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "preMdfRightHz",
+            "columnName": "preMdfRightHz",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "preRmsLeft",
+            "columnName": "preRmsLeft",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "preRmsRight",
+            "columnName": "preRmsRight",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "preWindowCount",
+            "columnName": "preWindowCount",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "postMdfLeftHz",
+            "columnName": "postMdfLeftHz",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "postMdfRightHz",
+            "columnName": "postMdfRightHz",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "postRmsLeft",
+            "columnName": "postRmsLeft",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "postRmsRight",
+            "columnName": "postRmsRight",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "postWindowCount",
+            "columnName": "postWindowCount",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "postMeasuredAtMs",
+            "columnName": "postMeasuredAtMs",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fiLeftPercent",
+            "columnName": "fiLeftPercent",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "fiRightPercent",
+            "columnName": "fiRightPercent",
+            "affinity": "REAL",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "mdf_point",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `sessionId` INTEGER NOT NULL, `phase` TEXT NOT NULL, `timeMs` INTEGER NOT NULL, `mdfLeftHz` REAL NOT NULL, `mdfRightHz` REAL NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "sessionId",
+            "columnName": "sessionId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "phase",
+            "columnName": "phase",
+            "affinity": "TEXT",
+            "notNull": true
+          },
+          {
+            "fieldPath": "timeMs",
+            "columnName": "timeMs",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mdfLeftHz",
+            "columnName": "mdfLeftHz",
+            "affinity": "REAL",
+            "notNull": true
+          },
+          {
+            "fieldPath": "mdfRightHz",
+            "columnName": "mdfRightHz",
+            "affinity": "REAL",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "autoGenerate": true,
+          "columnNames": [
+            "id"
+          ]
+        },
+        "indices": [
+          {
+            "name": "index_mdf_point_sessionId",
+            "unique": false,
+            "columnNames": [
+              "sessionId"
+            ],
+            "orders": [],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_mdf_point_sessionId` ON `${TABLE_NAME}` (`sessionId`)"
+          }
+        ],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5b831860be11dee1db7ecaaa0e2e9289')"
+    ]
+  }
+}
