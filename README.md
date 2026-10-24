@@ -16,7 +16,7 @@ ESP32-S3 허브와 근전도(EMG) 센서로 하지 IMU 데이터와 근피로 �
 ## 📱 앱 화면
 
 <!-- 스크린샷은 docs/screenshots/ 폴더에 추가 예정 -->
-| 기기 연결 | 근전도 측정 | 러닝 상세 |
+| 기기 연결 | 근전도 측정 | 러닝 상세(기능 확인용 짧은 테스트 세션에서 캡쳐) |
 |:---:|:---:|:---:|
 | ![device](docs/screenshots/device.png) | ![emg](docs/screenshots/emg.png) | ![detail](docs/screenshots/detail.png) |
 
